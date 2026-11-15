@@ -1,0 +1,177 @@
+{
+  "audit": {
+    "source": "Original Olist Brazilian E-Commerce Public Dataset",
+    "rows_joined": 108660,
+    "orders": 95146,
+    "distinct_categories": 73,
+    "distinct_products": 31632,
+    "multi_category_orders": 723,
+    "multi_category_rate": 0.007598848086099258,
+    "multi_product_orders": 3141,
+    "multi_product_rate": 0.03301242301305362,
+    "train_orders": 57087,
+    "validation_orders": 19029,
+    "test_orders": 19030,
+    "mask_seed": 42,
+    "test_eligible_baskets": 181,
+    "unseen_target_rate": 0.0
+  },
+  "selected_hyperparameters": {
+    "min_count": 20,
+    "min_confidence": 0.1,
+    "validation_hit_rate_at_10": 0.5688622754491018,
+    "validation_rule_trigger_rate": 0.011976047904191617,
+    "rule_count": 1
+  },
+  "validation_grid": [
+    {
+      "min_count": 5,
+      "min_confidence": 0.02,
+      "validation_hit_rate_at_10": 0.5688622754491018,
+      "validation_rule_trigger_rate": 0.011976047904191617,
+      "rule_count": 1
+    },
+    {
+      "min_count": 5,
+      "min_confidence": 0.05,
+      "validation_hit_rate_at_10": 0.5688622754491018,
+      "validation_rule_trigger_rate": 0.011976047904191617,
+      "rule_count": 1
+    },
+    {
+      "min_count": 5,
+      "min_confidence": 0.1,
+      "validation_hit_rate_at_10": 0.5688622754491018,
+      "validation_rule_trigger_rate": 0.011976047904191617,
+      "rule_count": 1
+    },
+    {
+      "min_count": 10,
+      "min_confidence": 0.02,
+      "validation_hit_rate_at_10": 0.5688622754491018,
+      "validation_rule_trigger_rate": 0.011976047904191617,
+      "rule_count": 1
+    },
+    {
+      "min_count": 10,
+      "min_confidence": 0.05,
+      "validation_hit_rate_at_10": 0.5688622754491018,
+      "validation_rule_trigger_rate": 0.011976047904191617,
+      "rule_count": 1
+    },
+    {
+      "min_count": 10,
+      "min_confidence": 0.1,
+      "validation_hit_rate_at_10": 0.5688622754491018,
+      "validation_rule_trigger_rate": 0.011976047904191617,
+      "rule_count": 1
+    },
+    {
+      "min_count": 20,
+      "min_confidence": 0.02,
+      "validation_hit_rate_at_10": 0.5688622754491018,
+      "validation_rule_trigger_rate": 0.011976047904191617,
+      "rule_count": 1
+    },
+    {
+      "min_count": 20,
+      "min_confidence": 0.05,
+      "validation_hit_rate_at_10": 0.5688622754491018,
+      "validation_rule_trigger_rate": 0.011976047904191617,
+      "rule_count": 1
+    },
+    {
+      "min_count": 20,
+      "min_confidence": 0.1,
+      "validation_hit_rate_at_10": 0.5688622754491018,
+      "validation_rule_trigger_rate": 0.011976047904191617,
+      "rule_count": 1
+    }
+  ],
+  "test_metrics": [
+    {
+      "method": "popularity",
+      "k": 5,
+      "eligible_baskets": 181,
+      "hits": 82,
+      "hit_rate_at_k": 0.4530386740331492,
+      "precision_at_k": 0.09060773480662984,
+      "nonempty_recommendation_rate": 1.0,
+      "rule_trigger_rate": 0.0
+    },
+    {
+      "method": "popularity",
+      "k": 10,
+      "eligible_baskets": 181,
+      "hits": 109,
+      "hit_rate_at_k": 0.6022099447513812,
+      "precision_at_k": 0.060220994475138116,
+      "nonempty_recommendation_rate": 1.0,
+      "rule_trigger_rate": 0.0
+    },
+    {
+      "method": "cooccurrence",
+      "k": 5,
+      "eligible_baskets": 181,
+      "hits": 95,
+      "hit_rate_at_k": 0.5248618784530387,
+      "precision_at_k": 0.10497237569060773,
+      "nonempty_recommendation_rate": 1.0,
+      "rule_trigger_rate": 0.0
+    },
+    {
+      "method": "cooccurrence",
+      "k": 10,
+      "eligible_baskets": 181,
+      "hits": 124,
+      "hit_rate_at_k": 0.6850828729281768,
+      "precision_at_k": 0.06850828729281767,
+      "nonempty_recommendation_rate": 1.0,
+      "rule_trigger_rate": 0.0
+    },
+    {
+      "method": "apriori",
+      "k": 5,
+      "eligible_baskets": 181,
+      "hits": 82,
+      "hit_rate_at_k": 0.4530386740331492,
+      "precision_at_k": 0.09060773480662984,
+      "nonempty_recommendation_rate": 1.0,
+      "rule_trigger_rate": 0.011049723756906077
+    },
+    {
+      "method": "apriori",
+      "k": 10,
+      "eligible_baskets": 181,
+      "hits": 109,
+      "hit_rate_at_k": 0.6022099447513812,
+      "precision_at_k": 0.060220994475138116,
+      "nonempty_recommendation_rate": 1.0,
+      "rule_trigger_rate": 0.011049723756906077
+    }
+  ],
+  "paired_bootstrap": {
+    "method_a": "apriori",
+    "method_b": "cooccurrence",
+    "k": 10,
+    "n": 181,
+    "difference": -0.08287292817679558,
+    "ci95_percentile": [
+      -0.14917127071823205,
+      -0.022099447513812154
+    ],
+    "replicates": 10000,
+    "seed": 20261115,
+    "interval_crosses_zero": false
+  },
+  "trained_rule_count": 1,
+  "frequent_itemsets": 67,
+  "limitations": [
+    "Observational cross-sectional order baskets: no causal revenue uplift.",
+    "One hidden category in the same order: not sequential next-order prediction.",
+    "Delivered orders only; possible survivorship selection.",
+    "Historical Olist marketplace is not representative of global e-commerce.",
+    "Only one chronological holdout; repeat with alternative splits and mask seeds.",
+    "Popularity fallback may account for hits when no association rule applies."
+  ]
+}
