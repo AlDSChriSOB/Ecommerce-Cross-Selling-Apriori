@@ -23,7 +23,7 @@ def test_apriori_known_itemsets_and_rules():
     assert counts[("a",)] == 3
     assert counts[("a", "b")] == 2
     assert ("a", "b", "c") not in counts
-    rules = generate_rules(counts, n, min_confidence=.5)
+    rules = generate_rules(counts, n, min_confidence=.5, min_lift=0.0)
     assert any(r["antecedent"] == ("a",) and r["consequent"] == "b"
                and abs(r["confidence"] - 2 / 3) < 1e-12 for r in rules)
 
