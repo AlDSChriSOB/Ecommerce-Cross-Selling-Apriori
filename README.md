@@ -6,7 +6,23 @@ An auditable investigation of product-category association rules for e-commerce 
 
 **Research question:** *Do Apriori-derived association rules improve category-level masked-basket Hit Rate@K over popularity and co-occurrence baselines on chronologically later Olist orders?*
 
-> **Research status (15 November 2026):** source code, notebook, reproducible workflow and deterministic correctness tests are committed. Real-data experiment outputs are **not yet verified**. No numerical result has been invented.
+> **Research status (15 November 2026):** real Olist data downloaded and processed successfully in GitHub Actions; research runner, executed notebook and unit-test CI all completed. The observed outcome is **negative for Apriori relative to co-occurrence**, not an invented performance claim. See [evidence-grounded findings](reports/OBSERVED_FINDINGS.md) and the [executed notebook](notebooks/01_olist_research_EXECUTED.ipynb).
+
+## Executed findings — original Olist data
+
+| Measure | Observed result |
+|---|---:|
+| Valid delivered orders after cleaning | 95,146 |
+| Multi-category orders | 723 (0.76%) |
+| Eligible held-out test baskets | 181 |
+| Popularity Hit Rate@10 | 60.22% |
+| Co-occurrence Hit Rate@10 | **68.51%** |
+| Apriori + popularity fallback Hit Rate@10 | 60.22% |
+| Apriori rule-trigger rate | 1.10% |
+
+A paired bootstrap for Apriori minus co-occurrence yields **−8.29 percentage points** (95% interval **−14.92 to −2.21 pp**), conditional on this split and masking seed. The category sparsity and near-absent Apriori rule coverage materially limit cross-sell claims.
+
+**[Review all verified outputs](results/metrics.json)** · **[View figure](results/figures/hit_rate.png)** · **[Open executed notebook](notebooks/01_olist_research_EXECUTED.ipynb)**
 
 ## Why category-level first?
 
