@@ -1,0 +1,18 @@
+{
+  "dataset": "Original Olist Brazilian E-Commerce Public Dataset",
+  "runs": 15,
+  "split_count": 3,
+  "mask_seed_count": 5,
+  "apriori_minus_cooccurrence_mean": -0.09498879924595559,
+  "apriori_minus_cooccurrence_min": -0.145985401459854,
+  "apriori_minus_cooccurrence_max": -0.051094890510948905,
+  "apriori_beats_cooccurrence_runs": 0,
+  "apriori_rule_trigger_rate_mean": 0.007591367393430737,
+  "limitations": [
+    "The split windows overlap; results are not independent replicates.",
+    "Multiple mask seeds reuse the same held-out orders.",
+    "The percentile intervals are conditional on each split and mask seed.",
+    "No sales uplift or next-order prediction is evaluated.",
+    "The source contains very few multi-category baskets."
+  ]
+}
