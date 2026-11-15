@@ -1,0 +1,43 @@
+name: Run real Olist research (manual)
+on:
+  workflow_dispatch:
+jobs:
+  real-data-experiment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install research dependencies
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install kagglehub
+      - name: Download original public Olist dataset
+        run: |
+          python - <<'PY'
+          import kagglehub, pathlib, shutil
+          source = pathlib.Path(kagglehub.dataset_download("olistbr/brazilian-ecommerce"))
+          dest = pathlib.Path("data/raw")
+          dest.mkdir(parents=True, exist_ok=True)
+          for name in (
+              "olist_orders_dataset.csv",
+              "olist_order_items_dataset.csv",
+              "olist_products_dataset.csv",
+              "product_category_name_translation.csv",
+          ):
+              paths = list(source.rglob(name))
+              if not paths:
+                  raise FileNotFoundError(f"{name} not present in downloaded dataset")
+              shutil.copyfile(paths[0], dest / name)
+          PY
+      - name: Execute chronological benchmark on real data
+        run: python -m scripts.run_research --data-dir data/raw --output results
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: olist-real-research-results
+          path: results/
+          if-no-files-found: warn
+          retention-days: 30
