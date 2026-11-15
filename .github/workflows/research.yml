@@ -39,6 +39,8 @@ jobs:
           PY
       - name: Execute chronological benchmark on real data
         run: python -m scripts.run_research --data-dir data/raw --output results
+      - name: Run repeated split and masking robustness experiments
+        run: python -m scripts.run_robustness --data-dir data/raw --output results/robustness
       - name: Execute Jupyter research notebook on original data
         run: |
           python -m jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=600 --output 01_olist_research_EXECUTED.ipynb --output-dir notebooks notebooks/01_olist_research.ipynb
@@ -56,7 +58,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f results/metrics.json results/RESEARCH_RESULTS.md results/validation_grid.csv results/association_rules.csv results/per_order_hits.csv results/figures/hit_rate.png notebooks/01_olist_research_EXECUTED.ipynb
+          git add -f results/metrics.json results/RESEARCH_RESULTS.md results/validation_grid.csv results/association_rules.csv results/per_order_hits.csv results/figures/hit_rate.png results/robustness/summary.json results/robustness/split_seed_sensitivity.csv notebooks/01_olist_research_EXECUTED.ipynb
           if ! git diff --cached --quiet; then
             git commit -m "Publish genuine Olist executed research outputs [skip ci]"
             git push origin HEAD:main
