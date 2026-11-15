@@ -1,6 +1,9 @@
 name: Run real Olist research (manual)
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/research.yml'
 jobs:
   real-data-experiment:
     runs-on: ubuntu-latest
