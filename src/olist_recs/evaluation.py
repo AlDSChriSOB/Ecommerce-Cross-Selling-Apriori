@@ -17,9 +17,13 @@ def fit(train: pd.DataFrame, min_count=10, min_confidence=.05, min_lift=1.0, max
     for basket in baskets:
         for a, b in combinations(sorted(set(basket)), 2):
             pair_counts[(a, b)] += 1
+    neighbors = {}
+    for (a, b), count in pair_counts.items():
+        neighbors.setdefault(a, []).append((b, count))
+        neighbors.setdefault(b, []).append((a, count))
     return {
         "rules": rules, "popularity": popularity,
-        "pairs": pair_counts, "n_orders": n_orders,
+        "pairs": pair_counts, "neighbors": neighbors, "n_orders": n_orders,
         "frequent_itemsets": len(counts),
     }
 
@@ -35,11 +39,12 @@ def recommend(model, observed, method, k=10, fallback=True):
         rule_triggered = bool(ranking)
     elif method == "cooccurrence":
         scores = Counter()
-        for (a, b), count in model["pairs"].items():
-            if a in seen and b not in seen:
-                scores[b] += count / popularity[a]
-            if b in seen and a not in seen:
-                scores[a] += count / popularity[b]
+        for a in seen:
+            if a not in popularity:
+                continue
+            for b, count in model["neighbors"].get(a, ()):
+                if b not in seen:
+                    scores[b] += count / popularity[a]
         ranking = sorted(scores, key=lambda x: (-scores[x], x))[:k]
     if method == "popularity":
         ranking = sorted(
