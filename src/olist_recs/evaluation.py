@@ -7,9 +7,9 @@ from .apriori import frequent_itemsets, generate_rules, top_rules
 
 METHODS = ("popularity", "cooccurrence", "apriori")
 
-def fit(train: pd.DataFrame, min_count=10, min_confidence=.05, min_lift=1.0):
+def fit(train: pd.DataFrame, min_count=10, min_confidence=.05, min_lift=1.0, max_len=3):
     baskets = list(train["items"])
-    counts, n_orders = frequent_itemsets(baskets, min_count=min_count, max_len=3)
+    counts, n_orders = frequent_itemsets(baskets, min_count=min_count, max_len=max_len)
     rules = generate_rules(counts, n_orders,
                            min_confidence=min_confidence, min_lift=min_lift)
     popularity = Counter(item for basket in baskets for item in set(basket))
