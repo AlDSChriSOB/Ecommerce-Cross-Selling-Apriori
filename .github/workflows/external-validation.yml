@@ -1,4 +1,5 @@
 name: External UK retail replication
+# Uses pre-indexed co-occurrence neighborhoods for scalable validation
 on:
   push:
     paths:
