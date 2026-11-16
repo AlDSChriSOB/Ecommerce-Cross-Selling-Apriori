@@ -24,6 +24,15 @@ A paired bootstrap for Apriori minus co-occurrence yields **−8.29 percentage p
 
 **[Review all verified outputs](results/metrics.json)** · **[View figure](results/figures/hit_rate.png)** · **[Open executed notebook](notebooks/01_olist_research_EXECUTED.ipynb)**
 
+## Robustness checks — completed
+
+The original-data workflow has now executed **15 sensitivity evaluations**: three chronological splits × five masking seeds. Apriori + popularity fallback **did not outperform co-occurrence in any of the 15**; its average Hit@10 difference was **−9.50 percentage points** (range **−14.60 to −5.11 pp**). The average Apriori rule-trigger rate was only **0.76%**. Twelve of the 15 per-configuration paired bootstrap intervals excluded zero, but the evaluations overlap and are **not independent experiments**.
+
+- [Read the complete robustness study](reports/ROBUSTNESS_STUDY.md)
+- [Inspect the 15 observed results](results/robustness/split_seed_sensitivity.csv)
+- [Inspect machine-readable robustness summary](results/robustness/summary.json)
+- [View successful GitHub Actions execution](https://github.com/AlDSChriSOB/Ecommerce-Cross-Selling-Apriori/actions/runs/43776500009)
+
 ## Why category-level first?
 
 Olist contains many unique product identifiers and many one-product orders. Rule mining on individual product IDs may be too sparse to support generalisable associations. This project **first audits both product-level and category-level multi-item baskets**, then uses category-level baskets as the primary feasible target. Any business recommendation must acknowledge that a category is not a concrete sellable SKU.
