@@ -1,0 +1,162 @@
+{
+  "source": "UCI Online Retail dataset (DOI:10.24432/C5BW33)",
+  "independence": "Distinct UK non-store retail dataset, not Olist.",
+  "non_equivalence": "StockCode/SKU basket completion with pair-only Apriori; not directly comparable to Olist category-level task.",
+  "audit": {
+    "original_lines": 541909,
+    "positive_non_cancelled_lines": 530104,
+    "unique_invoices": 19960,
+    "unique_stock_codes": 3922,
+    "multi_sku_invoices": 18319,
+    "multi_sku_share": 0.9177855711422845,
+    "train": 11976,
+    "validation": 3992,
+    "test": 3992
+  },
+  "selected_hyperparameters": {
+    "min_count": 20,
+    "min_confidence": 0.1,
+    "validation_apriori_hit10": 0.23290656496867337,
+    "validation_rule_trigger_rate": 0.9782075728684282
+  },
+  "validation_grid": [
+    {
+      "min_count": 20,
+      "min_confidence": 0.02,
+      "validation_apriori_hit10": 0.23290656496867337,
+      "validation_rule_trigger_rate": 0.9782075728684282
+    },
+    {
+      "min_count": 20,
+      "min_confidence": 0.05,
+      "validation_apriori_hit10": 0.23290656496867337,
+      "validation_rule_trigger_rate": 0.9782075728684282
+    },
+    {
+      "min_count": 20,
+      "min_confidence": 0.1,
+      "validation_apriori_hit10": 0.23290656496867337,
+      "validation_rule_trigger_rate": 0.9782075728684282
+    },
+    {
+      "min_count": 50,
+      "min_confidence": 0.02,
+      "validation_apriori_hit10": 0.22282756742032145,
+      "validation_rule_trigger_rate": 0.954508308362844
+    },
+    {
+      "min_count": 50,
+      "min_confidence": 0.05,
+      "validation_apriori_hit10": 0.22282756742032145,
+      "validation_rule_trigger_rate": 0.954508308362844
+    },
+    {
+      "min_count": 50,
+      "min_confidence": 0.1,
+      "validation_apriori_hit10": 0.22282756742032145,
+      "validation_rule_trigger_rate": 0.954508308362844
+    },
+    {
+      "min_count": 100,
+      "min_confidence": 0.02,
+      "validation_apriori_hit10": 0.17515663307000817,
+      "validation_rule_trigger_rate": 0.8983928084990466
+    },
+    {
+      "min_count": 100,
+      "min_confidence": 0.05,
+      "validation_apriori_hit10": 0.17515663307000817,
+      "validation_rule_trigger_rate": 0.8983928084990466
+    },
+    {
+      "min_count": 100,
+      "min_confidence": 0.1,
+      "validation_apriori_hit10": 0.17515663307000817,
+      "validation_rule_trigger_rate": 0.8983928084990466
+    }
+  ],
+  "test_metrics": [
+    {
+      "method": "popularity",
+      "k": 5,
+      "eligible_baskets": 3707,
+      "hits": 56,
+      "hit_rate_at_k": 0.015106555165902346,
+      "precision_at_k": 0.0030213110331804693,
+      "nonempty_recommendation_rate": 1.0,
+      "rule_trigger_rate": 0.0
+    },
+    {
+      "method": "popularity",
+      "k": 10,
+      "eligible_baskets": 3707,
+      "hits": 105,
+      "hit_rate_at_k": 0.0283247909360669,
+      "precision_at_k": 0.00283247909360669,
+      "nonempty_recommendation_rate": 1.0,
+      "rule_trigger_rate": 0.0
+    },
+    {
+      "method": "cooccurrence",
+      "k": 5,
+      "eligible_baskets": 3707,
+      "hits": 350,
+      "hit_rate_at_k": 0.09441596978688967,
+      "precision_at_k": 0.018883193957377933,
+      "nonempty_recommendation_rate": 1.0,
+      "rule_trigger_rate": 0.0
+    },
+    {
+      "method": "cooccurrence",
+      "k": 10,
+      "eligible_baskets": 3707,
+      "hits": 472,
+      "hit_rate_at_k": 0.12732667925546265,
+      "precision_at_k": 0.012732667925546262,
+      "nonempty_recommendation_rate": 1.0,
+      "rule_trigger_rate": 0.0
+    },
+    {
+      "method": "apriori",
+      "k": 5,
+      "eligible_baskets": 3707,
+      "hits": 615,
+      "hit_rate_at_k": 0.165902346911249,
+      "precision_at_k": 0.0331804693822498,
+      "nonempty_recommendation_rate": 1.0,
+      "rule_trigger_rate": 0.9846236849204208
+    },
+    {
+      "method": "apriori",
+      "k": 10,
+      "eligible_baskets": 3707,
+      "hits": 881,
+      "hit_rate_at_k": 0.23765848394928513,
+      "precision_at_k": 0.023765848394928516,
+      "nonempty_recommendation_rate": 1.0,
+      "rule_trigger_rate": 0.9846236849204208
+    }
+  ],
+  "paired_bootstrap": {
+    "method_a": "apriori",
+    "method_b": "cooccurrence",
+    "k": 10,
+    "n": 3707,
+    "difference": 0.11033180469382249,
+    "ci95_percentile": [
+      0.09630428918262746,
+      0.12435932020501754
+    ],
+    "replicates": 10000,
+    "seed": 20261116,
+    "interval_crosses_zero": false
+  },
+  "rule_count": 183406,
+  "cautions": [
+    "External dataset is not an independent Olist population replicate.",
+    "SKU-level item universe and pair-only Apriori differ from Olist categories.",
+    "This evaluates one masked SKU from the same invoice, not a future sale.",
+    "The original UK data describe a non-store gift retailer, not a supermarket.",
+    "The model does not estimate causal commercial uplift."
+  ]
+}
