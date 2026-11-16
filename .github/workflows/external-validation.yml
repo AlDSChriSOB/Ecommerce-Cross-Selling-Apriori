@@ -1,0 +1,56 @@
+name: External UK retail replication
+on:
+  push:
+    paths:
+      - '.github/workflows/external-validation.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  external-replication:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install requirements
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install openpyxl
+      - name: Download original independent UCI Online Retail workbook
+        run: |
+          python - <<'PY'
+          import io, pathlib, urllib.request, zipfile
+          url = "https://archive.ics.uci.edu/static/public/352/online+retail.zip"
+          with urllib.request.urlopen(url, timeout=180) as response:
+              archive = response.read()
+          with zipfile.ZipFile(io.BytesIO(archive)) as z:
+              names = [name for name in z.namelist() if name.lower().endswith(".xlsx")]
+              if not names:
+                  raise FileNotFoundError("No original .xlsx in UCI Online Retail archive")
+              path = pathlib.Path("data/external/Online Retail.xlsx")
+              path.parent.mkdir(parents=True, exist_ok=True)
+              path.write_bytes(z.read(names[0]))
+              print("Original workbook:", names[0], "bytes:", path.stat().st_size)
+          PY
+      - name: Run external chronological SKU-level replication
+        run: python -m scripts.run_external_validation --input-file "data/external/Online Retail.xlsx" --output results/external_validation
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: external-uci-retail-replication
+          path: results/external_validation/
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Commit verified external outputs
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/external_validation/metrics.json results/external_validation/validation_grid.csv results/external_validation/per_invoice_hits.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish independently sourced UCI replication results [skip ci]"
+            git push origin HEAD:main
+          fi
